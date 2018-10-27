@@ -8,7 +8,7 @@ An example of a consumer of [swapi](https://swapi.co/) using Angular 7 and Angul
 On the root folder, run `yarn install`
 
 ## Running
-1. On the root folder, run `yarn serve`
+1. On the root folder, run `yarn start`
 2. Go to http://localhost:4200/
 
 ## Tests

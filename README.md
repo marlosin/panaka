@@ -1,5 +1,5 @@
 # panaka
-An example of a consumer of [swapi](https://swapi.co/documentation#people) using Angular 7 and Angular Material.
+An example of a consumer of [swapi](https://swapi.co/) using Angular 7 and Angular Material.
 
 ## Prerequisites
 - [Yarn](https://yarnpkg.com/lang/en/docs/install)

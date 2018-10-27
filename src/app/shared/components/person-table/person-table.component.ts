@@ -1,9 +1,9 @@
 import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators'
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core'
-import { MatPaginator, PageEvent } from '@angular/material'
+import { MatPaginator, PageEvent, MatSort, Sort } from '@angular/material'
+import { FormControl } from '@angular/forms'
 import { PersonService } from '@app/person/services/person.service'
 import { PersonDataSource } from './data/person-data-source'
-import { FormControl } from '@angular/forms'
 
 @Component({
   selector: 'panaka-person-table',
@@ -17,6 +17,7 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   public readonly searchFormControl = new FormControl()
 
   @ViewChild(MatPaginator) paginator: MatPaginator
+  @ViewChild(MatSort) sort: MatSort
 
   constructor(
     private _personService: PersonService,
@@ -27,6 +28,8 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
 
   public ngOnInit(): void {
     this._loadPeople()
+
+    this.sort.sortChange.subscribe((direction) => console.log);
 
     this.searchFormControl.valueChanges
       .pipe(
@@ -44,6 +47,11 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
           this._loadPeople(pageEvent.pageIndex + 1)
         })
       ).subscribe()
+
+    this.sort.sortChange.subscribe((sort: Sort) => {
+      this.dataSource.sort(sort)
+      this._changeDetector.detectChanges()
+    })
   }
 
   private _loadPeople(page = 1): void {

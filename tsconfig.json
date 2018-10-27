@@ -13,7 +13,8 @@
     "paths": {
       "@app/*": ["app/*"],
       "@shared/*": ["app/shared/*"],
-      "@person/*": ["app/person/*"]
+      "@person/*": ["app/person/*"],
+      "@env/*": ["environments/*"]
     },
     "typeRoots": [
       "node_modules/@types"

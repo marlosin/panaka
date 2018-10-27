@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: './person/person.module#PersonModule',
   },
   {
+    path: 'planets',
+    loadChildren: './planet/planet.module#PlanetModule',
+  },
+  {
     path: '**',
     redirectTo: 'people'
   },

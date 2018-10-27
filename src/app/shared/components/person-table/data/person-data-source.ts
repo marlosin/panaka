@@ -3,7 +3,7 @@ import { DataSource } from '@angular/cdk/table'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material'
 
 import { PersonService } from '@app/person/services/person.service'
 import { ListResponse } from '@app/shared/interfaces/list-response'
@@ -12,7 +12,6 @@ import { Person } from '@app/shared/interfaces/person'
 export class PersonDataSource implements DataSource<Person> {
   private _personSubject = new BehaviorSubject<Person[]>([])
   private _count = 0
-  private _sort: Sort
 
   constructor(
     private _personService: PersonService,
@@ -34,12 +33,16 @@ export class PersonDataSource implements DataSource<Person> {
 
     return this._personService.list(params)
       .pipe(
-        catchError(() => of([])),
         tap((response: ListResponse<Person>) => {
           this._personSubject.next(response.results)
           this._count = response.count
         }),
       )
+  }
+
+  public addPeople(people: Person[]): void {
+    this._personSubject.next(people)
+    this._count = people.length
   }
 
   public get count(): number {

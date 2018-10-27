@@ -1,11 +1,14 @@
-import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators'
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core'
-import { MatPaginator, PageEvent, MatSort, Sort } from '@angular/material'
+import {
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild
+} from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { Person } from '@shared/interfaces/person';
+import { MatPaginator, MatSort, PageEvent, Sort } from '@angular/material'
+import { Router } from '@angular/router'
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators'
+
 import { PersonService } from '@app/person/services/person.service'
+import { Person } from '@shared/interfaces/person'
 import { PersonDataSource } from './data/person-data-source'
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'panaka-person-table',
@@ -14,6 +17,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonTableComponent implements OnInit, AfterViewInit {
+  @Input() people: Person[]
   public readonly dataSource: PersonDataSource
   public readonly displayedColumns = ['name', 'gender', 'birthYear']
   public readonly searchFormControl = new FormControl()
@@ -32,7 +36,7 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this._loadPeople()
 
-    this.sort.sortChange.subscribe((direction) => console.log);
+    if (this.people) { return }
 
     this.searchFormControl.valueChanges
       .pipe(
@@ -44,6 +48,8 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    if (this.people) { return }
+
     this.paginator.page
       .pipe(
         tap((pageEvent: PageEvent) => {
@@ -62,8 +68,14 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   }
 
   private _loadPeople(page = 1): void {
+    if (this.people) {
+      this.dataSource.addPeople(this.people)
+      this._changeDetector.detectChanges()
+      return
+    }
+
     this.dataSource.loadPeople(this.searchFormControl.value, page)
-      .subscribe((bla) => {
+      .subscribe(() => {
         this._changeDetector.detectChanges()
       })
   }

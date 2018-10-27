@@ -1,10 +1,14 @@
+import { ImageResult } from './../interfaces/image-result'
 import { Injectable, EventEmitter } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { tap, finalize } from 'rxjs/operators'
-import { GetParam } from '../interfaces/get-param'
+import { tap, map, finalize } from 'rxjs/operators'
+import { GetParam } from '@shared/interfaces/get-param'
+import { environment } from '@env/environment'
+import { ImageSearchParam } from '@shared/interfaces/image-search-param'
 
 const API_URL = '/swapi'
+const IMAGE_API_URL = '/image'
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +40,31 @@ export class HttpService {
         tap(() => {
           this._onGetStart.emit()
         }),
+        finalize(() => {
+          this._onGetFinish.emit()
+        })
+      )
+  }
+
+  public searchImage(q: string, params: ImageSearchParam): Observable<ImageResult> {
+    const options = {
+      params: new HttpParams()
+        .set('key', environment.searchApiKey)
+        .set('cx', environment.searchApiCx)
+        .set('q', q)
+        .set('num', '1') // first result
+        .set('searchType', 'image')
+        .set('fields', 'items(link,image(height,thumbnailHeight,thumbnailLink,thumbnailWidth,width))')
+        .set('imageType', params.imageType)
+        .set('imageSize', params.imageSize)
+    }
+
+    return this._http.get<{ items: ImageResult[] }>(IMAGE_API_URL, options)
+      .pipe(
+        tap(() => {
+          this._onGetStart.emit()
+        }),
+        map((response) => response.items ? response.items[0] : null),
         finalize(() => {
           this._onGetFinish.emit()
         })

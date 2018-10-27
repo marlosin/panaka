@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@shared/shared.module'
 import { PersonRoutingModule } from '@person/person-routing.module'
 
 import { PersonListComponent } from '@person/components/person-list/person-list.component'

@@ -1,4 +1,6 @@
-import { PersonData } from '@shared/interfaces/person-data';
+import { Planet } from './planet'
+import { getIdFromUrl } from '@app/shared/utils/string'
+import { PersonData } from '@shared/interfaces/person-data'
 export class Person {
   id: string
   name: string
@@ -6,7 +8,9 @@ export class Person {
   birthYear: string
   filmUrls: string[]
   planetUrl: string
-  planetName?: string
+  imageUrl?: string
+  avatarUrl?: string
+  planet?: Planet
   films?: string[]
 
   public static create(personData: PersonData): Person {
@@ -18,7 +22,7 @@ export class Person {
       films: filmUrls,
       homeworld: planetUrl,
     } = personData
-    const [id] = /[0-9]+/.exec(url)
+    const id = getIdFromUrl(url)
 
     return new Person({
       id,
@@ -37,7 +41,7 @@ export class Person {
     this.birthYear = person.birthYear
     this.filmUrls = person.filmUrls
     this.planetUrl = person.planetUrl
-    this.planetName = person.planetName || null
+    this.planet = person.planet || null
     this.films = person.films || []
   }
 }

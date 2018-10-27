@@ -6,5 +6,13 @@
       "^/swapi": ""
     },
     "changeOrigin": true
+  },
+  "/image": {
+    "target": "https://www.googleapis.com/customsearch/v1",
+    "secure": false,
+    "pathRewrite": {
+      "^/image": ""
+    },
+    "changeOrigin": true
   }
 }

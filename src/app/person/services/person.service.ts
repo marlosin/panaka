@@ -1,11 +1,14 @@
+import { getIdFromUrl } from '@app/shared/utils/string'
+import { ImageSearchParam } from '@shared/interfaces/image-search-param'
 import { Injectable } from '@angular/core'
-import { Observable, forkJoin, Observer } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, forkJoin, of } from 'rxjs'
+import { map, catchError } from 'rxjs/operators'
 import { HttpService } from '@app/shared/services/http.service'
 import { ListResponse } from '@app/shared/interfaces/list-response'
 import { Person } from '@app/shared/interfaces/person'
 import { PersonData } from '@shared/interfaces/person-data'
 import { GetParam } from '@app/shared/interfaces/get-param'
+import { ImageResult } from '@app/shared/interfaces/image-result'
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,7 @@ export class PersonService {
   public list(params: GetParam = {}): Observable<ListResponse<Person>> {
     return this._httpService.get('/people', params)
       .pipe(
+        catchError(() => of([])),
         map((response: ListResponse<PersonData>) => {
           const { results, ...rest } = response
 
@@ -31,7 +35,7 @@ export class PersonService {
       )
   }
 
-  public get(id: number): Observable<Person> {
+  public get(id: string): Observable<Person> {
     return this._httpService.get('/people/' + id)
       .pipe(
         map(Person.create)
@@ -47,9 +51,13 @@ export class PersonService {
     }
 
     const observables = filmUrls
-      .map((url) => /[0-9]+/.exec(url)[0])
+      .map((url) => getIdFromUrl(url))
       .map(byFilmObservable)
 
     return forkJoin(observables)
+  }
+
+  public getImage(name: string, params: ImageSearchParam): Observable<ImageResult> {
+    return this._httpService.searchImage(name, params)
   }
 }

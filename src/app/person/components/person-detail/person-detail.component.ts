@@ -1,8 +1,12 @@
-import { finalize, tap } from 'rxjs/operators';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Person } from '@shared/interfaces/person';
-import { PersonService } from '@person/services/person.service';
+import { PlanetService } from './../../../shared/services/planet.service'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { tap } from 'rxjs/operators'
+
+import { PersonService } from '@person/services/person.service'
+import { ImageSearchParam } from '@shared/interfaces/image-search-param'
+import { Person } from '@shared/interfaces/person'
+import { getIdFromUrl } from '@app/shared/utils/string'
 
 @Component({
   selector: 'panaka-person-detail',
@@ -16,7 +20,9 @@ export class PersonDetailComponent implements OnInit {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _personService: PersonService,
+    private _planetService: PlanetService,
     private _changeDetector: ChangeDetectorRef,
+    private _router: Router,
   ) { }
 
   ngOnInit() {
@@ -29,15 +35,20 @@ export class PersonDetailComponent implements OnInit {
     return this._person
   }
 
-  private _loadPerson(id: number) {
+  public goToPlanet(planetId: string): void {
+    this._router.navigate(['planets', planetId])
+  }
+
+  private _loadPerson(id: string) {
     this._personService.get(id)
       .pipe(
         tap((person) => {
           this._loadFilmNames(person)
           this._loadPlanet(person)
+          this._loadImages(person)
         })
       )
-      .subscribe(person => {
+      .subscribe((person) => {
         this._person = person
         this._changeDetector.detectChanges()
       })
@@ -49,7 +60,28 @@ export class PersonDetailComponent implements OnInit {
       this._changeDetector.detectChanges()
     })
   }
+
+  private _loadImages(person: Person) {
+    const avatarParams: ImageSearchParam = { imageSize: 'small', imageType: 'face' }
+
+    this._personService.getImage(person.name, avatarParams).subscribe((result) => {
+      person.avatarUrl = result.link
+      this._changeDetector.detectChanges()
+    })
+
+    const imgParams: ImageSearchParam = { imageSize: 'large', imageType: 'photo' }
+
+    this._personService.getImage(person.name, imgParams).subscribe((result) => {
+      person.imageUrl = result.link
+      this._changeDetector.detectChanges()
+    })
+  }
+
   private _loadPlanet(person: Person) {
-    // TODO: load planet
+    const id = getIdFromUrl(person.planetUrl)
+    this._planetService.get(id).subscribe((planet) => {
+      person.planet = planet
+      this._changeDetector.detectChanges()
+    })
   }
 }

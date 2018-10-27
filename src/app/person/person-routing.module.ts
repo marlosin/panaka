@@ -1,4 +1,4 @@
-import { PersonDetailComponent } from './components/person-detail/person-detail.component';
+import { PersonDetailComponent } from './components/person-detail/person-detail.component'
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { PersonListComponent } from '@app/person/components/person-list/person-list.component'

@@ -2,8 +2,10 @@ import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators'
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core'
 import { MatPaginator, PageEvent, MatSort, Sort } from '@angular/material'
 import { FormControl } from '@angular/forms'
+import { Person } from '@shared/interfaces/person';
 import { PersonService } from '@app/person/services/person.service'
 import { PersonDataSource } from './data/person-data-source'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'panaka-person-table',
@@ -22,6 +24,7 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   constructor(
     private _personService: PersonService,
     private _changeDetector: ChangeDetectorRef,
+    private _router: Router,
   ) {
     this.dataSource = new PersonDataSource(this._personService)
   }
@@ -54,9 +57,13 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
     })
   }
 
+  public goToDetails(row: Person) {
+    this._router.navigate(['people', row.id])
+  }
+
   private _loadPeople(page = 1): void {
     this.dataSource.loadPeople(this.searchFormControl.value, page)
-      .subscribe(() => {
+      .subscribe((bla) => {
         this._changeDetector.detectChanges()
       })
   }

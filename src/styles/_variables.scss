@@ -1,0 +1,7 @@
+@import '~@angular/material/theming';
+
+$app-primary: mat-palette($mat-deep-purple);
+$app-accent: mat-palette($mat-amber, A200, A100, A400);
+
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);

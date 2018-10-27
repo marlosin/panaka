@@ -1,8 +1,17 @@
 @import '~@angular/material/theming';
+@import '~styles/variables';
 
 :host {
   @include mat-elevation(2);
   display: flex;
   flex-direction: column;
   padding: 1em;
+}
+
+.person-table-row {
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($accent, .2);
+  }
 }

@@ -4,4 +4,5 @@ export interface PersonData {
   films: string[]
   gender: string
   name: string
+  url: string
 }

@@ -1,0 +1,21 @@
+<mat-card class="person-detail-card">
+  <mat-card-header>
+    <!-- <div mat-card-avatar class="person-deital-card-avatar"></div> -->
+    <mat-card-title>{{ person?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ person?.gender }}</mat-card-subtitle>
+  </mat-card-header>
+  <!-- <img mat-card-image [src]="person.image" alt="Photo of {{ person.name }}"> -->
+  <mat-card-content>
+    <h3 class="person-detail-films-title mat-h3">Films</h3>
+    <mat-list dense>
+      <mat-list-item *ngFor="let film of person?.films; last as last">
+        <mat-icon matListIcon>movie</mat-icon>
+        <span>{{ film }}</span>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </mat-list-item>
+     </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button *ngIf="person?.planetName">See characters from {{ person.planetName }}</button>
+  </mat-card-actions>
+</mat-card>

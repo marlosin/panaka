@@ -17,6 +17,8 @@ import { PersonTableComponent } from '@shared/components/person-table/person-tab
   ],
   exports: [
     PersonTableComponent,
+    CommonModule,
+    AppMaterialModule,
   ]
 })
 export class SharedModule { }

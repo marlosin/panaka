@@ -4,6 +4,7 @@
     "secure": false,
     "pathRewrite": {
       "^/swapi": ""
-    }
+    },
+    "changeOrigin": true
   }
 }

@@ -1,12 +1,12 @@
-import { LayoutModule } from '@angular/cdk/layout';
-import { CdkTableModule } from '@angular/cdk/table';
-import { NgModule } from '@angular/core';
+import { LayoutModule } from '@angular/cdk/layout'
+import { CdkTableModule } from '@angular/cdk/table'
+import { NgModule } from '@angular/core'
 import {
     MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatPaginatorModule, MatSortModule,
     MatTableModule,
     MatInputModule,
     MatFormFieldModule
-} from '@angular/material';
+} from '@angular/material'
 
 @NgModule({
   exports: [

@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { tap, finalize } from 'rxjs/operators'
-import { GetParam } from '../interfaces/get-param';
+import { GetParam } from '../interfaces/get-param'
 
 const API_URL = '/swapi'
 

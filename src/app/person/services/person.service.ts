@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators'
 import { HttpService } from '@app/shared/services/http.service'
 import { ListResponse } from '@app/shared/interfaces/list-response'
 import { Person } from '@app/shared/interfaces/person'
-import { GetParam } from '@app/shared/interfaces/get-param';
+import { GetParam } from '@app/shared/interfaces/get-param'
 
 @Injectable({
   providedIn: 'root'

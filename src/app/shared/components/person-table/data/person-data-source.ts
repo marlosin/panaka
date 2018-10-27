@@ -4,12 +4,12 @@ import { BehaviorSubject, Observable, of } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 
 import { PersonService } from '@app/person/services/person.service'
-import { ListResponse } from '@app/shared/interfaces/list-response';
+import { ListResponse } from '@app/shared/interfaces/list-response'
 import { Person } from '@app/shared/interfaces/person'
 
 export class PersonDataSource implements DataSource<Person> {
   private _personSubject = new BehaviorSubject<Person[]>([])
-  private _count = 0;
+  private _count = 0
 
   constructor(
     private _personService: PersonService,

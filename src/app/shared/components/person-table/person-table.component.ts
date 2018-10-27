@@ -1,9 +1,9 @@
-import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material';
-import { PersonService } from '@app/person/services/person.service';
-import { PersonDataSource } from './data/person-data-source';
-import { FormControl } from '@angular/forms';
+import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators'
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core'
+import { MatPaginator, PageEvent } from '@angular/material'
+import { PersonService } from '@app/person/services/person.service'
+import { PersonDataSource } from './data/person-data-source'
+import { FormControl } from '@angular/forms'
 
 @Component({
   selector: 'panaka-person-table',
@@ -11,7 +11,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./person-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PersonTableComponent implements OnInit {
+export class PersonTableComponent implements OnInit, AfterViewInit {
   public readonly dataSource: PersonDataSource
   public readonly displayedColumns = ['name', 'gender', 'birthYear']
   public readonly searchFormControl = new FormControl()

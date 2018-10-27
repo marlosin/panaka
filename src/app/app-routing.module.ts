@@ -5,7 +5,11 @@ const routes: Routes = [
   {
     path: 'people',
     loadChildren: './person/person.module#PersonModule',
-   },
+  },
+  {
+    path: '**',
+    redirectTo: 'people'
+  },
 ]
 
 @NgModule({

@@ -1,0 +1,9 @@
+{
+  "/swapi": {
+    "target": "https://swapi.co/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/swapi": ""
+    }
+  }
+}

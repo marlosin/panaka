@@ -2,13 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { PersonTableComponent } from './person-table.component'
 
+export const PersonTableDeclarations = [
+  PersonTableComponent,
+]
+
 describe('PersonTableComponent', () => {
   let component: PersonTableComponent
   let fixture: ComponentFixture<PersonTableComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PersonTableComponent ]
+      declarations: PersonTableDeclarations
     })
     .compileComponents()
   }))

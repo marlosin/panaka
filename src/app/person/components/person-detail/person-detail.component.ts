@@ -1,7 +1,7 @@
-import { PlanetService } from './../../../shared/services/planet.service'
+import { PlanetService } from '@shared/services/planet.service'
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { tap } from 'rxjs/operators'
+import { tap, catchError } from 'rxjs/operators'
 
 import { PersonService } from '@person/services/person.service'
 import { ImageSearchParam } from '@shared/interfaces/image-search-param'
@@ -64,17 +64,19 @@ export class PersonDetailComponent implements OnInit {
   private _loadImages(person: Person) {
     const avatarParams: ImageSearchParam = { imageSize: 'small', imageType: 'face' }
 
-    this._personService.getImage(person.name, avatarParams).subscribe((result) => {
-      person.avatarUrl = result.link
-      this._changeDetector.detectChanges()
-    })
+    this._personService.getImage(person.name, avatarParams)
+      .subscribe((result) => {
+        person.avatarUrl = result.link
+        this._changeDetector.detectChanges()
+      })
 
     const imgParams: ImageSearchParam = { imageSize: 'large', imageType: 'photo' }
 
-    this._personService.getImage(person.name, imgParams).subscribe((result) => {
-      person.imageUrl = result.link
-      this._changeDetector.detectChanges()
-    })
+    this._personService.getImage(person.name, imgParams)
+      .subscribe((result) => {
+        person.imageUrl = result.link
+        this._changeDetector.detectChanges()
+      })
   }
 
   private _loadPlanet(person: Person) {

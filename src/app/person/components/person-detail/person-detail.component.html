@@ -6,16 +6,24 @@
       [style.backgroundImage]="'url('+ person.avatarUrl + ')'"
       class="person-deital-card-avatar"
       ></div>
+    <div
+      *ngIf="!person.avatarUrl"
+      mat-card-avatar
+      class="person-deital-card-avatar"
+      >
+      <mat-icon>person</mat-icon>
+    </div>
     <mat-card-title>{{ person?.name }}</mat-card-title>
     <mat-card-subtitle>{{ person?.gender }}</mat-card-subtitle>
     <span class="mat-h4 person-birth-year">{{ person?.birthYear }}</span>
   </mat-card-header>
   <div
-    *ngIf="person.imageUrl"
     class="person-detail-card-image"
     mat-card-image
-    [style.backgroundImage]="'url('+ person.imageUrl + ')'"
-    ></div>
+    [style.backgroundImage]="person.imageUrl ? 'url('+ person.imageUrl + ')' : null"
+    >
+    <!-- TODO: provide placeholder image -->
+  </div>
   <mat-card-content>
     <h3 class="person-detail-films-title mat-h3">Films</h3>
     <mat-list dense>
@@ -29,8 +37,8 @@
   <mat-card-actions>
     <button
       *ngIf="person.planet"
-      mat-button
+      mat-stroked-button
       (click)="goToPlanet(person.planet.id)"
-      >See characters from {{ person.planet.name }}</button>
+      ><mat-icon>nature</mat-icon>Other characters from {{ person.planet.name }}</button>
   </mat-card-actions>
 </mat-card>

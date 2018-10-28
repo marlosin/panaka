@@ -3,12 +3,17 @@
 }
 
 .person-deital-card-avatar {
+  background-color: #f8f8f8;
   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .person-detail-card-image {
+  background-color: #f8f8f8;
   background-size: cover;
-  background-position: top center;
+  background-position: top;
   height: 25em;
 }
 

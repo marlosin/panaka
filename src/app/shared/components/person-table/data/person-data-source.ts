@@ -34,13 +34,12 @@ export class PersonDataSource implements DataSource<Person> {
     return this._personService.list(params)
       .pipe(
         tap((response: ListResponse<Person>) => {
-          this._personSubject.next(response.results)
-          this._count = response.count
+          this.addPeople(response.results, response.count)
         }),
       )
   }
 
-  public addPeople(people: Person[]): void {
+  public addPeople(people: Person[], count: number): void {
     this._personSubject.next(people)
     this._count = people.length
   }

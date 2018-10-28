@@ -1,0 +1,21 @@
+@import '~styles/variables';
+
+.title-row {
+  font-family: 'Press Start 2P', cursive;
+  height: 5em !important;
+}
+
+.toolbar-actions {
+  background-color: $accent;
+  position: relative;
+}
+
+.app-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.app-content {
+  padding: 1em;
+}

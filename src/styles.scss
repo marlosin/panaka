@@ -1,2 +1,7 @@
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~styles/material-overrides';
+
+body {
+  margin: 0;
+}

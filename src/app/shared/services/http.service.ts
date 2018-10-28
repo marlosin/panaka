@@ -1,8 +1,8 @@
 import { ImageResult } from './../interfaces/image-result'
 import { Injectable, EventEmitter } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { tap, map, finalize } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
+import { tap, map, catchError } from 'rxjs/operators'
 import { GetParam } from '@shared/interfaces/get-param'
 import { environment } from '@env/environment'
 import { ImageSearchParam } from '@shared/interfaces/image-search-param'
@@ -14,14 +14,14 @@ const IMAGE_API_URL = '/image'
   providedIn: 'root'
 })
 export class HttpService {
-  private readonly _onGetStart = new EventEmitter<void>()
-  private readonly _onGetFinish = new EventEmitter<void>()
+  public readonly onGetStart = new EventEmitter<void>()
+  public readonly onGetFinish = new EventEmitter<void>()
 
   constructor(
     private _http: HttpClient,
   ) { }
 
-  public get(endpoint: string, params: GetParam = {}): Observable<any> {
+  public get(endpoint: string, params: GetParam = {}, emitStatus = true): Observable<any> {
     const { filter, page } = params
     const options = { params: new HttpParams() }
 
@@ -35,18 +35,28 @@ export class HttpService {
         .set('page', page.toString())
     }
 
-    return this._http.get(API_URL + endpoint, options)
-      .pipe(
+    const req = this._http.get(API_URL + endpoint, options)
+
+    if (!emitStatus) {
+      return req
+    }
+
+    this.onGetStart.emit()
+      return req.pipe(
         tap(() => {
-          this._onGetStart.emit()
-        }),
-        finalize(() => {
-          this._onGetFinish.emit()
+          this.onGetFinish.emit()
         })
       )
   }
 
   public searchImage(q: string, params: ImageSearchParam): Observable<ImageResult> {
+    const key = q + '|' + params.imageSize + params.imageType
+    const item: ImageResult = JSON.parse(localStorage.getItem(key))
+
+    if (item) {
+      return of(item)
+    }
+
     const options = {
       params: new HttpParams()
         .set('key', environment.searchApiKey)
@@ -59,14 +69,17 @@ export class HttpService {
         .set('imageSize', params.imageSize)
     }
 
+    this.onGetStart.emit()
     return this._http.get<{ items: ImageResult[] }>(IMAGE_API_URL, options)
       .pipe(
-        tap(() => {
-          this._onGetStart.emit()
-        }),
         map((response) => response.items ? response.items[0] : null),
-        finalize(() => {
-          this._onGetFinish.emit()
+        tap((imageResult: ImageResult) => {
+          localStorage.setItem(key, JSON.stringify(imageResult))
+          this.onGetFinish.emit()
+        }),
+        catchError(({ error }) => {
+          console.warn('oops: ', error.error.message)
+          throw error
         })
       )
   }

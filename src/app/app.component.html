@@ -1,1 +1,18 @@
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="title-row">
+    {{ title }}
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="toolbar-actions">
+    <button mat-stroked-button color="primary" (click)="goToPeople()">People</button>
+    <mat-progress-bar
+      *ngIf="isLoading"
+      class="app-progress"
+      mode="indeterminate"
+      ></mat-progress-bar>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<section class="app-content">
+  <router-outlet></router-outlet>
+</section>

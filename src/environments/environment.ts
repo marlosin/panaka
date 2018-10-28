@@ -4,8 +4,12 @@
 
 export const environment = {
   production: false,
-  searchApiKey: 'AIzaSyBz8Dh7PsDWwaInJ51RmtYVZoC3WS02b8k',
-  searchApiCx: '007519132849599102356:rsaw8naeick',
+  /**
+   * in order to display images for the characters, you should provide a google search api key
+   * and a google custom search engine id below (see https://cse.google.com/cse/).
+   */
+  searchApiKey: null,
+  searchApiCx: null,
 }
 
 /*

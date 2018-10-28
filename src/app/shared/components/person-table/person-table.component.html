@@ -8,6 +8,7 @@
 </mat-form-field>
 
 <mat-table
+  [hidden]="!hasContent"
   [dataSource]="dataSource"
   matSort
   matSortDirection="asc"
@@ -33,11 +34,17 @@
     class="person-table-row"
     (click)="goToDetails(row)"
     *matRowDef="let row; columns: displayedColumns;"
+    matTooltip="See details"
+    [matTooltipShowDelay]="100"
     ></mat-row>
 </mat-table>
 
+<p *ngIf="hasNoContent" class="empty-table-message mat-h4">
+  No results for your search 😓
+</p>
+
 <mat-paginator
-  *ngIf="!people"
+  [hidden]="!hasContent || people"
   [length]="dataSource.count"
   [hidePageSize]="true"
   [pageSize]="10"

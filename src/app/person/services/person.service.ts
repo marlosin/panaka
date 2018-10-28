@@ -2,7 +2,7 @@ import { getIdFromUrl } from '@app/shared/utils/string'
 import { ImageSearchParam } from '@shared/interfaces/image-search-param'
 import { Injectable } from '@angular/core'
 import { Observable, forkJoin, of } from 'rxjs'
-import { map, catchError } from 'rxjs/operators'
+import { map, catchError, tap } from 'rxjs/operators'
 import { HttpService } from '@app/shared/services/http.service'
 import { ListResponse } from '@app/shared/interfaces/list-response'
 import { Person } from '@app/shared/interfaces/person'
@@ -35,8 +35,8 @@ export class PersonService {
       )
   }
 
-  public get(id: string): Observable<Person> {
-    return this._httpService.get('/people/' + id)
+  public get(id: string, emitStatus = true): Observable<Person> {
+    return this._httpService.get('/people/' + id, {}, emitStatus)
       .pipe(
         map(Person.create)
       )
@@ -44,7 +44,7 @@ export class PersonService {
 
   public getFilmNames(filmUrls: string[]): Observable<string[]> {
     const byFilmObservable = (id: string) => {
-      return this._httpService.get('/films/' + id)
+      return this._httpService.get('/films/' + id, {}, false)
         .pipe(
           map((response: { title: string }) => response.title)
         )
@@ -54,7 +54,12 @@ export class PersonService {
       .map((url) => getIdFromUrl(url))
       .map(byFilmObservable)
 
-    return forkJoin(observables)
+    this._httpService.onGetStart.emit()
+    return forkJoin(observables).pipe(
+      tap(() => {
+        this._httpService.onGetFinish.emit()
+      })
+    )
   }
 
   public getImage(name: string, params: ImageSearchParam): Observable<ImageResult> {

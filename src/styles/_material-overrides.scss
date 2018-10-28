@@ -1,0 +1,7 @@
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Lato, sans-serif'
+);
+
+@include mat-base-typography($custom-typography);

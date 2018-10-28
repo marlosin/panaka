@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { PersonService } from '@person/services/person.service'
 import { PlanetService } from '@shared/services/planet.service'
 import { Planet } from '@app/shared/interfaces/planet'
 
@@ -15,7 +14,6 @@ export class PlanetResidentListComponent implements OnInit {
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _personService: PersonService,
     private _planetService: PlanetService,
     private _changeDetector: ChangeDetectorRef,
   ) { }

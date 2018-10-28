@@ -1,11 +1,12 @@
-import { PersonService } from '@app/person/services/person.service'
 import { Injectable } from '@angular/core'
-import { Observable, forkJoin } from 'rxjs'
-import { map, concatAll } from 'rxjs/operators'
+import { forkJoin, Observable } from 'rxjs'
+import { map, tap } from 'rxjs/operators'
+
+import { PersonService } from '@app/person/services/person.service'
 import { HttpService } from '@app/shared/services/http.service'
-import { Planet } from '@shared/interfaces/planet'
 import { Person } from '@shared/interfaces/person'
-import { getIdFromUrl } from '../utils/string'
+import { Planet } from '@shared/interfaces/planet'
+import { getIdFromUrl } from '@shared/utils/string'
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +31,23 @@ export class PlanetService {
         .subscribe((response: Planet) => {
           const residents = response.residents
             .map((url) => getIdFromUrl(url))
-            .map((personId) => this._personService.get(personId))
+            .map((personId) => this._personService.get(personId, false))
 
-          forkJoin(residents).subscribe((people: Person[]) => {
-            const planet = response
+          this._httpService.onGetStart.emit()
+          forkJoin(residents)
+          .pipe(
+            tap(() => {
+              this._httpService.onGetFinish.emit()
+            })
+          )
+          .subscribe((people: Person[]) => {
+              const planet = response
 
-            planet.people = people
+              planet.people = people
 
-            observer.next(planet)
-            observer.complete()
-          })
+              observer.next(planet)
+              observer.complete()
+            })
         })
     })
   }

@@ -1,3 +1,5 @@
+<h2 *ngIf="planet" class="mat-h2">Residents of {{ planet.name }}</h2>
 <panaka-person-table
+  *ngIf="planet"
   [people]="planet.people"
 ></panaka-person-table>

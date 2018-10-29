@@ -1,7 +1,7 @@
 import { PlanetService } from '@shared/services/planet.service'
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { tap, catchError } from 'rxjs/operators'
+import { tap } from 'rxjs/operators'
 
 import { PersonService } from '@person/services/person.service'
 import { ImageSearchParam } from '@shared/interfaces/image-search-param'
@@ -56,7 +56,7 @@ export class PersonDetailComponent implements OnInit {
 
   private _loadFilmNames(person: Person) {
     this._personService.getFilmNames(person.filmUrls).subscribe((filmNames) => {
-      this._person.films = filmNames
+      person.films = filmNames
       this._changeDetector.detectChanges()
     })
   }

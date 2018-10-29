@@ -1,18 +1,64 @@
+import { DebugElement, NgModule } from '@angular/core'
+import { Router, ActivatedRoute } from '@angular/router'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ReactiveFormsModule } from '@angular/forms'
+import {
+  MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule,
+  MatPaginatorModule, MatIconModule, MatTooltipModule
+} from '@angular/material'
 
 import { PersonTableComponent } from './person-table.component'
 
+import { StatusService } from '@app/shared/services/status.service'
+import { PersonService } from '@app/person/services/person.service'
+
+import { MockPersonService } from 'tests/mocks/person.service'
+import { MockStatusService } from 'tests/mocks/status.service'
+import { getElementFn } from 'tests/utils'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { MockActivatedRoute } from 'tests/mocks/activated-route'
+
+@NgModule({
+  exports: [
+    NoopAnimationsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatTooltipModule,
+  ]
+})
+export class PersonTableTestModules {}
+
 export const PersonTableDeclarations = [
   PersonTableComponent,
+]
+
+export const PersonTableProviders = [
+  { provide: ActivatedRoute, useClass: MockActivatedRoute },
+  { provide: StatusService, useClass: MockStatusService },
+  { provide: PersonService, useClass: MockPersonService },
+  { provide: Router, useValue: { navigate() {} } },
 ]
 
 describe('PersonTableComponent', () => {
   let component: PersonTableComponent
   let fixture: ComponentFixture<PersonTableComponent>
 
+  function getElement(selector: string): DebugElement {
+    return getElementFn(fixture)(selector)
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: PersonTableDeclarations
+      imports: [
+        PersonTableTestModules,
+      ],
+      declarations: PersonTableDeclarations,
+      providers: PersonTableProviders
     })
     .compileComponents()
   }))
@@ -20,10 +66,10 @@ describe('PersonTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonTableComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 })

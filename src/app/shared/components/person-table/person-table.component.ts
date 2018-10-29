@@ -60,7 +60,7 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   }
 
   public get hasContent(): boolean {
-    return !this.isLoading && Boolean(this.dataSource.count)
+    return Boolean(this.dataSource.count)
   }
 
   public get hasNoContent(): boolean {
@@ -88,11 +88,11 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
 
   private _listenPaginationChanges(): void {
     this.paginator.page
-    .pipe(
-      tap((pageEvent: PageEvent) => {
-        this._navigate({ page: pageEvent.pageIndex + 1 })
-      })
-    ).subscribe()
+      .pipe(
+        tap((pageEvent: PageEvent) => {
+          this._navigate({ page: pageEvent.pageIndex })
+        })
+      ).subscribe()
   }
 
   private _listenSortChanges(): void {
@@ -115,14 +115,11 @@ export class PersonTableComponent implements OnInit, AfterViewInit {
   private _listenQueryParams(): void {
     this._activatedRoute.queryParams
       .subscribe((queryParams) => {
-        console.log('entrou')
         this._loadPeople(queryParams.page, queryParams.filter)
       })
   }
 
   private _navigate(queryParams: Params): void {
-    console.log(queryParams)
-
     if (queryParams.filter === '') {
       delete queryParams.filter
 

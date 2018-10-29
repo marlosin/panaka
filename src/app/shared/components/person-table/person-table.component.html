@@ -46,6 +46,7 @@
 <mat-paginator
   [hidden]="!hasContent || people"
   [length]="dataSource.count"
+  [pageIndex]="dataSource.pageIndex"
   [hidePageSize]="true"
   [pageSize]="10"
 ></mat-paginator>

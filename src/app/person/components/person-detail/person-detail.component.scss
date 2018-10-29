@@ -1,5 +1,14 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
 .person-detail-card {
-  max-width: 30em
+  flex: 1;
+  @media (min-width: 768px) {
+    flex: 0;
+    min-width: 20em
+  }
 }
 
 .person-deital-card-avatar {

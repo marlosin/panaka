@@ -4,7 +4,12 @@
   </mat-toolbar-row>
 
   <mat-toolbar-row class="toolbar-actions">
-    <button mat-stroked-button color="primary" (click)="goToPeople()">People</button>
+    <button
+      mat-stroked-button
+      class="button-go-people"
+      color="primary"
+      (click)="goToPeople()">People</button>
+
     <mat-progress-bar
       *ngIf="isLoading"
       class="app-progress"

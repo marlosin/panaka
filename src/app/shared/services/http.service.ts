@@ -43,6 +43,10 @@ export class HttpService {
 
     this.onGetStart.emit()
       return req.pipe(
+        catchError((error) => {
+          this.onGetFinish.emit()
+          return error
+        }),
         tap(() => {
           this.onGetFinish.emit()
         })

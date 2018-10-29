@@ -12,6 +12,7 @@ import { Person } from '@app/shared/interfaces/person'
 export class PersonDataSource implements DataSource<Person> {
   private _personSubject = new BehaviorSubject<Person[]>([])
   private _count = 0
+  private _pageIndex = 0
 
   constructor(
     private _personService: PersonService,
@@ -31,6 +32,9 @@ export class PersonDataSource implements DataSource<Person> {
         page,
       }
 
+    this._pageIndex = page
+    console.log(page)
+
     return this._personService.list(params)
       .pipe(
         tap((response: ListResponse<Person>) => {
@@ -41,11 +45,15 @@ export class PersonDataSource implements DataSource<Person> {
 
   public addPeople(people: Person[], count: number): void {
     this._personSubject.next(people)
-    this._count = people.length
+    this._count = count
   }
 
   public get count(): number {
     return this._count
+  }
+
+  public get pageIndex(): number {
+    return this._pageIndex
   }
 
   public sort(sort: Sort): void {

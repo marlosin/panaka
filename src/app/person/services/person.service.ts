@@ -1,5 +1,3 @@
-import { getIdFromUrl } from '@app/shared/utils/string'
-import { ImageSearchParam } from '@shared/interfaces/image-search-param'
 import { Injectable } from '@angular/core'
 import { Observable, forkJoin, of } from 'rxjs'
 import { map, catchError, tap } from 'rxjs/operators'
@@ -9,6 +7,8 @@ import { Person } from '@app/shared/interfaces/person'
 import { PersonData } from '@shared/interfaces/person-data'
 import { GetParam } from '@app/shared/interfaces/get-param'
 import { ImageResult } from '@app/shared/interfaces/image-result'
+import { getIdFromUrl } from '@app/shared/utils/string'
+import { ImageSearchParam } from '@shared/interfaces/image-search-param'
 
 @Injectable({
   providedIn: 'root'

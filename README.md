@@ -4,10 +4,12 @@ An example of a consumer of [swapi](https://swapi.co/) using Angular 7 and Angul
 ## Prerequisites
 - [Yarn](https://yarnpkg.com/lang/en/docs/install)
 
+In order to display images for the characters, you should provide a google search api key (`searchApiKey`) and a google custom search engine id  (`searchApiCx`) in `environments/enviromnent.ts`. More details in https://cse.google.com/cse/
+
 ### Installing
 On the root folder, run `yarn install`
 
-## Running
+## **Running**
 1. On the root folder, run `yarn start`
 2. Go to http://localhost:4200/
 

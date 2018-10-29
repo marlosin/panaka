@@ -20,7 +20,8 @@ On the root folder, run `yarn test`
 - [Angular](https://angular.io/)
 - [Angular Material](https://material.angular.io/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Chai](http://www.chaijs.com/)
+- [Jasmine](https://jasmine.github.io/)
+- [Karma](https://karma-runner.github.io/)
 - [Mocha](https://mochajs.org/)
 
 ## License

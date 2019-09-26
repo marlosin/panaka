@@ -2,7 +2,9 @@ import { AppComponent } from '@app/app.component'
 import { StatusService } from './shared/services/status.service'
 import { TestBed, async, ComponentFixture } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { MatButtonModule, MatToolbarModule, MatProgressBarModule } from '@angular/material'
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MockStatusService } from 'tests/mocks/status.service'
 import { By } from '@angular/platform-browser'
 import { DebugElement } from '@angular/core'

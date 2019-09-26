@@ -2,7 +2,8 @@ import {
   AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { MatPaginator, MatSort, PageEvent, Sort } from '@angular/material'
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { Router, ActivatedRoute, Params } from '@angular/router'
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators'
 

@@ -3,7 +3,7 @@ import { DataSource } from '@angular/cdk/table'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 
-import { Sort } from '@angular/material'
+import { Sort } from '@angular/material/sort';
 
 import { PersonService } from '@app/person/services/person.service'
 import { ListResponse } from '@app/shared/interfaces/list-response'

@@ -2,10 +2,13 @@ import { DebugElement, NgModule } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
-import {
-  MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule,
-  MatPaginatorModule, MatIconModule, MatTooltipModule
-} from '@angular/material'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { PersonTableComponent } from './person-table.component'
 

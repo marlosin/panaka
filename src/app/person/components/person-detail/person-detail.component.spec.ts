@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { MatIconModule, MatCardModule, MatDividerModule, MatListModule } from '@angular/material'
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
 
